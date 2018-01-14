@@ -1,5 +1,19 @@
 import * as React from 'react';
 import './App.css';
+import { Link, Route, Switch } from 'react-router-dom'
+import { HomeA } from './HomeA';
+import { HomeB } from './HomeB';
+
+const Main = () => (
+  <main>
+    <Switch>
+      <Route exact path='/' component={HomeA}/>
+      <Route path='/HomeB' component={HomeB}/>
+    </Switch>
+    <Link to={`/HomeB`}>Home B</Link>
+    <Link to={`/`}>Home A</Link>
+  </main>
+)
 
 const logo = require('./logo.svg');
 
@@ -14,6 +28,7 @@ class App extends React.Component {
         <p className="App-intro">
           To get started, edit <code>src/App.tsx</code> and save to reload.
         </p>
+        <Main />
       </div>
     );
   }
