@@ -1,38 +1,36 @@
 import * as React from 'react';
+import { Route, Switch } from 'react-router-dom';
 // app
 import './App.css';
 import { TopMenu } from './top-menu/top-menu';
-import { JobPage } from './containers/job.page';
+import { JobPage } from './containers/job/job.page';
 import { MusicPage } from './containers/music.page';
-import { Route, Switch } from 'react-router-dom';
 
-const mainStyle = {
+const mainStyle: React.CSSProperties = {
   flex: '1',
   display: 'flex',
-  'flex-direction': 'column'
+  flexDirection: 'column'
 } ;
 
-const contentStyle = {
+const contentStyle: React.CSSProperties = {
   background: '#eee',
   border: '1px solid black',
   display: 'flex',
-  'flex-direction': 'column',
+  flexDirection: 'column',
   flex: '1',
 };
 
 const Main = () => (
   <main style={mainStyle}>
     <TopMenu />
-    <Switch>
-      <div style={contentStyle}>
+    <div style={contentStyle}>
+      <Switch>
         <Route exact={true} path="/" component={JobPage}/>
         <Route path="/music" component={MusicPage}/>
-      </div>
-    </Switch>
+      </Switch>
+    </div>
   </main>
 );
-
-// const logo = require('./logo.svg');
 
 class App extends React.Component {
   render() {
