@@ -17,8 +17,3 @@ const enhancer = composeEnhancers(
 );
 
 export const store = createStore(appReducer, enhancer);
-
-/*
-store.subscribe(() =>
-    console.log(store.getState());
-);*/ 

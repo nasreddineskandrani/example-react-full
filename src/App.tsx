@@ -1,10 +1,17 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
 // app
-import './App.css';
+import './app.css';
 import { TopMenu } from './top-menu/top-menu';
-import { JobPage } from './containers/job/job.page';
-import { MusicPage } from './containers/music.page';
+import { asyncComponent } from './async-component';
+
+const jobPage = asyncComponent(() =>
+    import('./containers/job/job.page').then(module => module.default)
+);
+
+const musicPage = asyncComponent(() =>
+    import('./containers/music.page').then(module => module.default)
+);
 
 const mainStyle: React.CSSProperties = {
   flex: '1',
@@ -25,8 +32,8 @@ const Main = () => (
     <TopMenu />
     <div style={contentStyle}>
       <Switch>
-        <Route exact={true} path="/" component={JobPage}/>
-        <Route path="/music" component={MusicPage}/>
+        <Route exact={true} path="/" component={jobPage}/>
+        <Route path="/music" component={musicPage}/>
       </Switch>
     </div>
   </main>
@@ -35,7 +42,7 @@ const Main = () => (
 class App extends React.Component {
   render() {
     return (
-      <div className="App">
+      <div className="app">
         <Main />
       </div>
     );
