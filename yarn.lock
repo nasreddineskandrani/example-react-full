@@ -4476,6 +4476,12 @@ redux-devtools-extension@^2.13.2:
   version "2.13.2"
   resolved "https://registry.yarnpkg.com/redux-devtools-extension/-/redux-devtools-extension-2.13.2.tgz#e0f9a8e8dfca7c17be92c7124958a3b94eb2911d"
 
+redux-typed-actions@^0.1.5:
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/redux-typed-actions/-/redux-typed-actions-0.1.5.tgz#daafd4b38cf76b78c27c822c80924830ceb5c2eb"
+  dependencies:
+    typescript ">=2.3.0"
+
 redux@^3.6.0, redux@^3.7.2:
   version "3.7.2"
   resolved "https://registry.yarnpkg.com/redux/-/redux-3.7.2.tgz#06b73123215901d25d065be342eb026bc1c8537b"
@@ -5312,6 +5318,10 @@ type-is@~1.6.15:
   dependencies:
     media-typer "0.3.0"
     mime-types "~2.1.15"
+
+typescript@>=2.3.0:
+  version "2.7.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.7.2.tgz#2d615a1ef4aee4f574425cdff7026edf81919836"
 
 typescript@~2.5.3:
   version "2.5.3"

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { PlainAction } from 'redux-typed-actions';
 // app
 import { JobState } from './+state/job.reducer';
 import { Increment } from './+state/job.action';
@@ -10,15 +11,14 @@ const mapStateToProps = (state: JobState) => {
   };
 };
 
-const mapDispatchToProps = (dispatch: (action: Increment) => void) => {
+const mapDispatchToProps = (dispatch: (action: PlainAction) => void) => {
   return {
-    // TODO use typing lib
-    onIncrement: () => dispatch(Increment.create()),
+    onIncrement: () => dispatch(Increment.get()),
   };
 };
 
 export interface JobPageProps {
-  dispatch: (action: Increment) => void;
+  dispatch: (action: PlainAction) => void;
   count: number;
   onIncrement: () => void;
 }
