@@ -1,11 +1,15 @@
+// app
+import * as JobActions from './job.action';
 
-export function reducer(state: number = 0, action: { type: string }) {
+type JobReducerActions = JobActions.Actions;
+
+export function reducer(state: number = 0, action: JobReducerActions) {
     switch (action.type) {
-    case 'INCREMENT':
-        return state + 1;
-    case 'DECREMENT':
-        return state - 1;
-    default:
-        return state;
+        case JobActions.INCREMENT:
+            return state + 1;
+        case JobActions.DECREMENT:
+            return state - 1;
+        default:
+            return state;
     }
 }

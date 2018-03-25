@@ -3,6 +3,10 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 // app
 import { reducer as jobReducer } from './containers/job/+state/job.reducer';
 
+export interface Action {
+    type: string;
+}
+
 const appReducer = combineReducers({
     job: jobReducer,
 });
