@@ -12,11 +12,11 @@ ReactDOM.render(
   (
     // ROUTING Link
     // https://medium.com/@pshrmn/a-simple-react-router-v4-tutorial-7f23ff27adf
-    <BrowserRouter>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+       <App />
+      </BrowserRouter>
+    </Provider>
   ),
   document.getElementById('root'));
 registerServiceWorker();
