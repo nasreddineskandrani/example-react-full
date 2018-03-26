@@ -6,7 +6,7 @@ interface AsyncComponentState {
     Component: string;
 }
 
-export function asyncComponent(getComponent: Function)  {
+export function asyncComponent(getComponent: Function, bindEpics: Function = () => null)  {
     class AsyncComponent extends React.Component<{}, AsyncComponentState> {
 
         constructor(props: React.Props<AsyncComponentState>) {
@@ -22,6 +22,7 @@ export function asyncComponent(getComponent: Function)  {
                 this.setState({
                     Component: component
                 });
+                bindEpics();
             });
         }
 

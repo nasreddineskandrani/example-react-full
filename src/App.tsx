@@ -4,13 +4,18 @@ import { Route, Switch } from 'react-router-dom';
 import './app.css';
 import { TopMenu } from './top-menu/top-menu';
 import { asyncComponent } from './async-component';
+import { epics$ } from './store';
+import { incrementEpic$ } from './containers/job/+state/job.epic';
 
-const jobPage = asyncComponent(() =>
-    import('./containers/job/job.page').then(module => module.default)
+const jobPage = asyncComponent(
+  () => import('./containers/job/job.page').then(module => module.default),
+  () => {
+    return epics$.next(incrementEpic$);
+  }
 );
 
-const musicPage = asyncComponent(() =>
-    import('./containers/music.page').then(module => module.default)
+const musicPage = asyncComponent(
+  () => import('./containers/music.page').then(module => module.default)
 );
 
 const mainStyle: React.CSSProperties = {
