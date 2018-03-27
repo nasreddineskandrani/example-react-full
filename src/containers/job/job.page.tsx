@@ -4,6 +4,8 @@ import { PlainAction } from 'redux-typed-actions';
 // app
 import { JobState } from './+state/job.reducer';
 import { Increment } from './+state/job.action';
+import { incrementEpic$ } from './+state/job.epic';
+import { epics$ } from '../../store'; // TODO fix use absolute
 
 const mapStateToProps = (state: JobState) => {
   return {
@@ -23,7 +25,12 @@ export interface JobPageProps {
   onIncrement: () => void;
 }
 
-export class JobPageA extends React.Component<JobPageProps, {}> {
+export class JobPage extends React.Component<JobPageProps, {}> {
+
+  componentDidMount() {
+    epics$.next(incrementEpic$);
+  }
+  
   render() {
     return (
       <div>
@@ -40,6 +47,6 @@ export const JobPageConnected =
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(JobPageA);
+  )(JobPage);
 
 export default JobPageConnected;

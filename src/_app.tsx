@@ -1,17 +1,12 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
 // app
-import './app.css';
+import './_app.css';
 import { TopMenu } from './top-menu/top-menu';
 import { asyncComponent } from './async-component';
-import { epics$ } from './store';
-import { incrementEpic$ } from './containers/job/+state/job.epic';
 
 const jobPage = asyncComponent(
-  () => import('./containers/job/job.page').then(module => module.default),
-  () => {
-    return epics$.next(incrementEpic$);
-  }
+  () => import('./containers/job/job.page').then(module => module.default)
 );
 
 const musicPage = asyncComponent(
