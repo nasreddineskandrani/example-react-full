@@ -1,13 +1,14 @@
 import { ofType } from 'redux-observable';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, takeUntil } from 'rxjs/operators';
 import { PlainAction } from 'redux-typed-actions';
 // app
-import { Increment } from './job.action';
+import { Increment, UnloadJobPage } from './job.action';
 
-export const incrementEpic$ = (action$: Observable<PlainAction>, state: {}) =>
+export const incrementEpic$ = (action$: Observable<PlainAction>, state: {}): Observable<PlainAction> =>
   action$.pipe(
     ofType(Increment.type),
-    switchMap(() => of({type: 'incrementWOUHA', meta: 'k', error: false, payload: {counter: 1, test: 'h'}})),
+    takeUntil(action$.pipe(ofType(UnloadJobPage.type))),
+    switchMap(() => of({type: 'incrementEpic$ done', meta: 'k', error: false, payload: {counter: 1, test: 'h'}})),
   );

@@ -7,22 +7,24 @@ import { map, mergeMap } from 'rxjs/operators';
 import { PlainAction } from 'redux-typed-actions';
 import { of } from 'rxjs/observable/of';
 import { switchMap } from 'rxjs/operators';
+import { defineAction } from 'redux-typed-actions';
 // app
 import { reducer as jobReducer } from './containers/job/+state/job.reducer';
-import { Increment } from './containers/job/+state/job.action';
 
 export interface Action {
     type: string;
 }
 
-const idleEpic = (action$: Observable<PlainAction>, state: {}) =>
+export const idleAction = defineAction<{counter: number, test: string}>('[App] idle action');
+
+const idleEpic$ = (action$: Observable<PlainAction>, state: {}) =>
   action$.pipe(
-    ofType(Increment.type),
-    map((action: PlainAction) => Increment.cast(action)),
-    switchMap(() => of({type: 'bohbo', meta: 'k', error: false, payload: {counter: 1, test: 'h'}})),
+    ofType(idleAction.type),
+    map((action: PlainAction) => idleAction.cast(action)),
+    switchMap(() => of({type: 'idleEpic$ done', meta: 'k', error: false, payload: {counter: 1, test: 'h'}})),
   );
 
-export const epics$ = new BehaviorSubject(idleEpic);
+export const epics$ = new BehaviorSubject(idleEpic$);
 export const rootEpic =
     (action$: Observable<PlainAction>, state: {}) => {
        return epics$.pipe(
