@@ -4,12 +4,11 @@ import { createEpicMiddleware, ofType } from 'redux-observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { map, mergeMap } from 'rxjs/operators';
-import { PlainAction } from 'redux-typed-actions';
+import { defineAction, PlainAction } from 'redux-typed-actions';
 import { of } from 'rxjs/observable/of';
 import { switchMap } from 'rxjs/operators';
-import { defineAction } from 'redux-typed-actions';
 // app
-import { reducer as jobReducer } from './containers/job/+state/job.reducer';
+import { reducer as jobReducer } from './pages/job/+state/job.reducer';
 
 export interface Action {
     type: string;
