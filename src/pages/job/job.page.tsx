@@ -3,9 +3,13 @@ import { connect } from 'react-redux';
 import { PlainAction } from 'redux-typed-actions';
 // app
 import { JobState } from './+state/job.reducer';
+import { reducer as JobReducer } from './+state/job.reducer';
 import { Increment, UnloadJobPage } from './+state/job.action';
 import { incrementEpic$ } from './+state/job.epic';
 import { epics$ } from '../../store'; // TODO fix use absolute
+import { removeAsyncReducer, injectAsyncReducer, store } from '../../store'; // TODO fix use absolute
+
+const storeKeyJobPage = 'async_job';
 
 const mapStateToProps = (state: JobState) => {
   return {
@@ -30,10 +34,12 @@ export interface JobPageProps {
 export class JobPage extends React.Component<JobPageProps, {}> {
 
   componentDidMount() {
+    injectAsyncReducer(store, storeKeyJobPage, JobReducer);
     epics$.next(incrementEpic$);
   }
 
   componentWillUnmount() {
+    removeAsyncReducer(store, storeKeyJobPage);
     this.props.unloadPage();
   }
 

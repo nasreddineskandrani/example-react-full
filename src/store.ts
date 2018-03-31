@@ -1,4 +1,4 @@
-import { applyMiddleware, createStore, combineReducers } from 'redux';
+import { applyMiddleware, createStore, ReducersMapObject, combineReducers, Store } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { createEpicMiddleware, ofType } from 'redux-observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -7,12 +7,6 @@ import { map, mergeMap } from 'rxjs/operators';
 import { defineAction, PlainAction } from 'redux-typed-actions';
 import { of } from 'rxjs/observable/of';
 import { switchMap } from 'rxjs/operators';
-// app
-import { reducer as jobReducer } from './pages/job/+state/job.reducer';
-
-export interface Action {
-    type: string;
-}
 
 export const idleAction = defineAction<{counter: number, test: string}>('[App] idle action');
 
@@ -31,12 +25,46 @@ export const rootEpic =
         );
     };
 
-const appReducer = combineReducers({
-    job: jobReducer,
-});
+class AppState {
+    version: number;
+}
 
+const initialAppState = {
+    version: 1
+};
+
+const appStateReducer = (state: AppState = initialAppState, action: PlainAction) => {
+    return state;
+};
+
+let mapReducers: ReducersMapObject = {};
+
+// tslint:disable-next-line:no-any
+function createReducer(item: {name: string, reducer: any}) {
+    mapReducers = {
+        ...mapReducers,
+        [item.name]: item.reducer,
+    };
+    return combineReducers(mapReducers);
+}
+
+export function injectAsyncReducer<T>(
+    _store: Store<{}>, 
+    _name: string,
+    asyncReducer: (state: T, action: PlainAction) => T) {
+    _store.replaceReducer(createReducer({name: _name, reducer: asyncReducer}));
+}
+
+export function removeAsyncReducer(_store: Store<{}>, _name: string) {
+    mapReducers[_name] = (x) => { return null; };
+    _store.replaceReducer(combineReducers(mapReducers));
+}
+
+// lazyloading reducers vs devtool
+// https://github.com/gaearon/redux-devtools/issues/304
 const composeEnhancers = composeWithDevTools({
     // Specify custom devTools options
+    shouldHotReload: false
 });
 
 const middlewares = [
@@ -47,4 +75,4 @@ const enhancer = composeEnhancers(
   applyMiddleware(...middlewares),
 );
 
-export const store = createStore(appReducer, enhancer);
+export const store = createStore(createReducer({name: 'app', reducer: appStateReducer}), enhancer);

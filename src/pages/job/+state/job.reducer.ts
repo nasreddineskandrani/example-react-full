@@ -11,6 +11,9 @@ const initialState = {
 };
 
 export function reducer(state: JobState = initialState, action: PlainAction) {
+    if (!state) {
+        return initialState;
+    }
     if (Increment.is(action)) {
         return {...state, counter: state.counter + 1};
     } else {
