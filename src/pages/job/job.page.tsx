@@ -11,9 +11,13 @@ import { removeAsyncReducer, injectAsyncReducer, store } from '../../store'; // 
 
 const storeKeyJobPage = 'async_job';
 
-const mapStateToProps = (state: JobState) => {
+const mapStateToProps = (state: {}) => {
+  if (!state[storeKeyJobPage]) {
+    return {};
+  }
+  const jobPageState: JobState = state[storeKeyJobPage];
   return {
-    count: state.counter
+    counter: jobPageState.counter
   };
 };
 
@@ -26,7 +30,7 @@ const mapDispatchToProps = (dispatch: (action: PlainAction) => void) => {
 
 export interface JobPageProps {
   dispatch: (action: PlainAction) => void;
-  count: number;
+  counter: number;
   onIncrement: () => void;
   unloadPage: () => void;
 }
@@ -50,6 +54,9 @@ export class JobPage extends React.Component<JobPageProps, {}> {
         <button type="button" onClick={this.props.onIncrement}>
           {`Increment`}
         </button>
+        <span>
+          {this.props.counter}
+        </span>
       </div>
     );
   }
