@@ -10,7 +10,7 @@ const jobPage = asyncComponent(() =>
 );
 
 const musicPage = asyncComponent(() =>
-  import('./pages/music.page').then(module => module.default)
+  import('./pages/music/music.page').then(module => module.default)
 );
 
 const mainStyle: React.CSSProperties = {
