@@ -1,9 +1,11 @@
 import * as React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route } from 'react-router-dom';
+import { ConnectedRouter } from 'react-router-redux';
 // app
 import './app.css';
 import { TopMenu } from './top-menu/top-menu';
 import { asyncComponent } from './async-component';
+import { history } from './store';
 
 const jobPage = asyncComponent(() =>
   import('./pages/job/job.page').then(module => module.default)
@@ -31,10 +33,13 @@ const Main = () => (
   <main style={mainStyle}>
     <TopMenu />
     <div style={contentStyle}>
-      <Switch>
-        <Route exact={true} path="/" component={jobPage} />
-        <Route path="/music" component={musicPage} />
-      </Switch>
+      <ConnectedRouter history={history}>
+        <div>
+          <Route exact={true} path="/" component={jobPage} />
+          <Route path="/job" component={jobPage} />
+          <Route path="/music" component={musicPage} />
+        </div>
+      </ConnectedRouter>
     </div>
   </main>
 );

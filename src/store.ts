@@ -8,6 +8,11 @@ import { defineAction, PlainAction } from 'redux-typed-actions';
 import { of } from 'rxjs/observable/of';
 import { switchMap } from 'rxjs/operators';
 
+import createHistory from 'history/createBrowserHistory';
+import { routerReducer, routerMiddleware } from 'react-router-redux';
+
+export const history = createHistory();
+
 export const idleAction = defineAction<{counter: number, test: string}>('[App] idle action');
 
 const idleEpic$ = (action$: Observable<PlainAction>, state: {}) =>
@@ -37,7 +42,9 @@ const appStateReducer = (state: AppState = initialAppState, action: PlainAction)
     return state;
 };
 
-let mapReducers: ReducersMapObject = {};
+let mapReducers: ReducersMapObject = {
+    router: routerReducer
+};
 
 // tslint:disable-next-line:no-any
 function createReducer(item: {name: string, reducer: any}) {
@@ -68,7 +75,8 @@ const composeEnhancers = composeWithDevTools({
 });
 
 const middlewares = [
-    createEpicMiddleware(rootEpic)
+    createEpicMiddleware(rootEpic),
+    routerMiddleware(history)
 ];
 
 const enhancer = composeEnhancers(
